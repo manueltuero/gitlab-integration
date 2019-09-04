@@ -1,11 +1,13 @@
-image: lts-alpine
+image: node:10
 
 stages:
   - build
   - deploy
 
 stage: build
-  script: echo "Creating the build"
+  script:
+  - echo "Creating build"
 
 stage: deploy
-  script: echo "Deploying the app"
+  script:
+  - echo "Deploying the app"
