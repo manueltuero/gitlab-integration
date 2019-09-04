@@ -1,15 +1,29 @@
 image: node:10
-
 stages:
   - build
   - deploy
-
 Build Job:
   stage: build
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "$HOME/.npm"
+      - .cache/
+  before_script:
+    - npm ci
   script:
-    - echo Creating build
-
+    - npm run build
 Deploy Job:
   stage: deploy
   script:
     - echo Deploying app
+  only:
+    refs:
+      - master
+    changes:
+      - src/**/*
+      - static/**/*
+      - content/**/*
+      - package.json
+      - package-lock.json
+      - .gitlab-ci.yml
