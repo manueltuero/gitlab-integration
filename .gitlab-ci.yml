@@ -1,13 +1,13 @@
 image: node:10
 
+Build Job:
+  stage: build
+    script: echo "Creating build"
+
+Deploy Job:
+  stage: deploy
+    script: echo "Deploying the app"
+
 stages:
   - build
   - deploy
-
-stage: build
-  script:
-  - echo "Creating build"
-
-stage: deploy
-  script:
-  - echo "Deploying the app"
