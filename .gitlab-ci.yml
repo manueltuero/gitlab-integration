@@ -4,11 +4,6 @@ stages:
   - deploy
 Build Job:
   stage: build
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    paths:
-      - "$HOME/.npm"
-      - .cache/
   before_script:
     - npm ci
   script:
@@ -20,7 +15,7 @@ Build Job:
 Deploy Job:
   stage: deploy
   script:
-    - echo Deploying app
+    - ls build
   environment:
     name: staging
     url: https://staging.example.com
