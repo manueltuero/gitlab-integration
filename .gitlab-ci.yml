@@ -1,0 +1,11 @@
+image: lts-alpine
+
+stages:
+  - build
+  - deploy
+
+stage: build
+  script: echo "Creating the build"
+
+stage: deploy
+  script: echo "Deploying the app"
