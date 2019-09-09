@@ -18,8 +18,12 @@ Build Job:
 Deploy Job:
   stage: deploy
   before_script:
-    - apt install python3-pip
-    - pip3 install awscli
+    - curl -O https://bootstrap.pypa.io/get-pip.py
+    - python3 get-pip.py --user
+    - ls -a ~
+    - export PATH=~/.local/bin:$PATH
+    - source ~/.bash_profile
+    - pip3 --version
   script:
     - aws s3 sync build/ s3://$REACT_APP_AWS_S3_BUCKET_URL
   only:
