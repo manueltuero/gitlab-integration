@@ -1,7 +1,9 @@
 image: node:10
+
 stages:
   - build
   - deploy
+
 Build Job:
   stage: build
   before_script:
@@ -12,10 +14,13 @@ Build Job:
     name: build
     paths:
       - build
+
 Deploy Job:
   stage: deploy
+    before_script:
+    - pip install awscli
   script:
-    - ls build
+    - aws s3 sync build/ s3://$REACT_APP_AWS_S3_BUCKET_URL
   environment:
     name: staging
     url: https://staging.example.com
@@ -29,3 +34,9 @@ Deploy Job:
       - package.json
       - package-lock.json
       - .gitlab-ci.yml
+  variables:
+    REACT_APP_API_BASE_URL: $DEV_REACT_APP_API_BASE_URL
+    REACT_APP_AWS_S3_BUCKET_URL: $DEV_REACT_APP_AWS_S3_BUCKET_URL
+    REACT_APP_AWS_S3_ACCESS_KEY_ID: $DEV_REACT_APP_AWS_S3_ACCESS_KEY_ID
+    REACT_APP_AWS_S3_SECRET_ACCESS_KEY: $DEV_REACT_APP_AWS_S3_SECRET_ACCESS_KEY
+
