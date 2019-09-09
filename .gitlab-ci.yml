@@ -17,7 +17,7 @@ Build Job:
 
 Deploy Job:
   stage: deploy
-    before_script:
+  before_script:
     - pip install awscli
   script:
     - aws s3 sync build/ s3://$REACT_APP_AWS_S3_BUCKET_URL
