@@ -22,8 +22,7 @@ Deploy Job:
     - pip3 install awscli --upgrade
     - aws --version
   script:
-    - echo $AWS_ACCESS_KEY_ID
-    - echo $AWS_SECRET_ACCESS_KEY
+    - ls build
     - aws s3 sync build $DEV_REACT_APP_AWS_S3_BUCKET_URL
   only:
     refs:
