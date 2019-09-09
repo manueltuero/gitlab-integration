@@ -23,7 +23,7 @@ Deploy Job:
     - pip3 install awscli --upgrade
     - aws --version
   script:
-    - aws s3 sync build/ s3://$REACT_APP_AWS_S3_BUCKET_URL
+    - aws s3 sync build/ $REACT_APP_AWS_S3_BUCKET_URL
   only:
     refs:
       - master
