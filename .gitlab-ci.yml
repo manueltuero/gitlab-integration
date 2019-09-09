@@ -19,10 +19,7 @@ Deploy Job:
   stage: deploy
   before_script:
     - curl -O https://bootstrap.pypa.io/get-pip.py
-    - python3 get-pip.py --user
-    - ls -a ~
-    - export PATH=~/.local/bin:$PATH
-    - source ~/.bash_profile
+    - python3 get-pip.py
     - pip3 --version
   script:
     - aws s3 sync build/ s3://$REACT_APP_AWS_S3_BUCKET_URL
