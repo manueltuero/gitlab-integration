@@ -18,12 +18,10 @@ Build Job:
 Deploy Job:
   stage: deploy
   before_script:
+    - apt-get install pip
     - pip install awscli
   script:
     - aws s3 sync build/ s3://$REACT_APP_AWS_S3_BUCKET_URL
-  environment:
-    name: staging
-    url: https://staging.example.com
   only:
     refs:
       - master
