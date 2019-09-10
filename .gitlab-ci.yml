@@ -25,6 +25,10 @@ Deploy Job:
     - npm install aws-sdk
     - npm install -g aws-deploy-script-fe
   script:
+    - echo $REACT_APP_AWS_ACCESS_KEY_ID,
+    - echo $REACT_APP_BUCKET_REGION,
+    - echo $REACT_APP_AWS_ACCESS_KEY_ID,
+    - echo $REACT_APP_AWS_SECRET_ACCESS_KEY,
     - aws-deploy
   only:
     refs:
