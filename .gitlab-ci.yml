@@ -22,15 +22,10 @@ Build Job:
 Deploy Job:
   stage: deploy
   before_script:
-    - curl -O https://bootstrap.pypa.io/get-pip.py
-    - python3 get-pip.py
-    - mkdir ~/.aws/
-    - touch ~/.aws/credentials
-    - pip3 install awscli --upgrade
-    - printf "[default]\naws_access_key_id = %s\naws_secret_access_key = %s\n" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
-  script: 
-    - echo "DEV_AWS_BUCKET_URL= $DEV_AWS_BUCKET_URL"
-    - cat ~/.aws/credentials
+    - npm install aws-sdk
+    - npm install -g aws-deploy-script-fe
+  script:
+    - aws-deploy
   only:
     refs:
       - master
@@ -41,8 +36,3 @@ Deploy Job:
       - package.json
       - package-lock.json
       - .gitlab-ci.yml
-  variables:
-    REACT_APP_AWS_S3_BUCKET_URL: $DEV_AWS_BUCKET_URL
-    AWS_DEFAULT_REGION: us-east-2
-    AWS_ACCESS_KEY_ID: $DEV_AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY: $DEV_AWS_SECRET_ACCESS_KEY
