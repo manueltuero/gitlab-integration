@@ -4,6 +4,10 @@ stages:
   - build
   - deploy
 
+cache:
+  paths:
+    - node_modules/
+
 Build Job:
   stage: build
   before_script:
@@ -14,6 +18,7 @@ Build Job:
     name: build
     paths:
       - build
+
 Deploy Job:
   stage: deploy
   before_script:
@@ -36,5 +41,6 @@ Deploy Job:
       - .gitlab-ci.yml
   variables:
     REACT_APP_AWS_S3_BUCKET_URL: $DEV_AWS_BUCKET_URL
+    AWS_DEFAULT_REGION: us-east-2
     AWS_ACCESS_KEY_ID: $DEV_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: $DEV_AWS_SECRET_ACCESS_KEY
