@@ -28,7 +28,7 @@ Deploy Job:
     - touch ~/.aws/credentials
     - pip3 install awscli --upgrade
     - printf "[gitlab-integration-test]\naws_access_key_id = %s\naws_secret_access_key = %s\n" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
-  script: aws s3 sync build $DEV_AWS_BUCKET_URL
+  script: aws s3 sync build/ $DEV_AWS_BUCKET_URL
   only:
     refs:
       - master
