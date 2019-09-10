@@ -29,7 +29,7 @@ Deploy Job:
     - pip3 install awscli --upgrade
     - printf "[default]\naws_access_key_id = %s\naws_secret_access_key = %s\n" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
   script: 
-    - echo DEV_AWS_BUCKET_URL: $DEV_AWS_BUCKET_URL
+    - echo "DEV_AWS_BUCKET_URL= $DEV_AWS_BUCKET_URL"
     - cat ~/.aws/credentials
   only:
     refs:
