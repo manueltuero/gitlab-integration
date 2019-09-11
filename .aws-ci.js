@@ -1,9 +1,9 @@
 module.exports = {
   development: {
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-    region: process.env.REACT_APP_BUCKET_REGION,
-    bucket: process.env.REACT_APP_BUCKET_NAME,
+    accessKeyId: $REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: $REACT_APP_AWS_SECRET_ACCESS_KEY,
+    region: $REACT_APP_BUCKET_REGION,
+    bucket: $REACT_APP_BUCKET_NAME,
     Action: [
       "s3:GetObject",
       "s3:GetObjectAcl",
