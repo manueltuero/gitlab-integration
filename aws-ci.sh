@@ -1,10 +1,10 @@
 #!/bin/bash
-'module.exports = {
+module.exports = {
   development: {
-    accessKeyId: '$1',
-    secretAccessKey: '$2,'
-    region: '$3,'
-    bucket: '$4,'
+    accessKeyId: $1,
+    secretAccessKey: $2,
+    region: $3,
+    bucket: $4,
     Action: [
       "s3:GetObject",
       "s3:GetObjectAcl",
@@ -15,4 +15,4 @@
       "cloudfront:CreateInvalidation"
     ]
   }
-};'
+};
