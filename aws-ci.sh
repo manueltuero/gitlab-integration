@@ -1,9 +1,10 @@
-module.exports = {
+#!/bin/bash
+'module.exports = {
   development: {
-    accessKeyId: $REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: $REACT_APP_AWS_SECRET_ACCESS_KEY,
-    region: $REACT_APP_BUCKET_REGION,
-    bucket: $REACT_APP_BUCKET_NAME,
+    accessKeyId: '$1',
+    secretAccessKey: '$2,'
+    region: '$3,'
+    bucket: '$4,'
     Action: [
       "s3:GetObject",
       "s3:GetObjectAcl",
@@ -14,4 +15,4 @@ module.exports = {
       "cloudfront:CreateInvalidation"
     ]
   }
-};
+};'

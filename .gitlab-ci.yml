@@ -24,7 +24,8 @@ Deploy Job:
   before_script:
     - npm install aws-sdk
     - npm install -g aws-deploy-script-fe
-    - cat .aws-ci.js >> aws.js
+    - chmod 777 aws-ci.js
+    - ./aws-ci.js $REACT_APP_AWS_ACCESS_KEY_ID $REACT_APP_AWS_SECRET_ACCESS_KEY $REACT_APP_BUCKET_REGION $REACT_APP_BUCKET_NAME >> aws.js
   script:
     - cat aws.js
     - aws-deploy
