@@ -8,7 +8,7 @@ cache:
   paths:
     - node_modules/
 
-Build Job:
+Build template: &build_template
   stage: build
   before_script:
     - npm ci
@@ -19,16 +19,24 @@ Build Job:
     paths:
       - build
 
-Deploy Job:
+Deploy template: &deploy_template
   image: python:latest
   stage: deploy
   before_script:
     - pip install awscli
   script:
     - aws s3 sync build s3://$AWS_BUCKET_NAME
+
+Dev build job:
+  except:
+    - stage
+    - master
+  <<: *build_template
+
+Dev deploy job:
   only:
     refs:
-      - master
+      - development
     changes:
       - src/**/*
       - static/**/*
@@ -36,3 +44,4 @@ Deploy Job:
       - package.json
       - package-lock.json
       - .gitlab-ci.yml
+  <<: *deploy_template
