@@ -30,7 +30,7 @@ cache:
 Dev build job:
   except:
     refs:
-      - development
+      - master
   <<: *build_template
 
 Dev deploy job:
