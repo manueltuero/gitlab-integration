@@ -8,7 +8,7 @@ cache:
   paths:
     - node_modules/
 
-Build template: &build_template
+.Build template: &build_template
   stage: build
   before_script:
     - npm ci
@@ -19,7 +19,7 @@ Build template: &build_template
     paths:
       - build
 
-Deploy template: &deploy_template
+.Deploy template: &deploy_template
   image: python:latest
   stage: deploy
   before_script:
@@ -28,9 +28,8 @@ Deploy template: &deploy_template
     - aws s3 sync build s3://$AWS_BUCKET_NAME
 
 Dev build job:
-  only:
-    refs:
-      - development
+  except:
+    - branches
   <<: *build_template
 
 Dev deploy job:
