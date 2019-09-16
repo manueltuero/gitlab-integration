@@ -28,10 +28,9 @@ Deploy template: &deploy_template
     - aws s3 sync build s3://$AWS_BUCKET_NAME
 
 Dev build job:
-  except:
+  only:
     refs:
-      - stage
-      - master
+      - development
   <<: *build_template
 
 Dev deploy job:
