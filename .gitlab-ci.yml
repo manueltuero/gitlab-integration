@@ -29,8 +29,9 @@ Deploy template: &deploy_template
 
 Dev build job:
   except:
-    - stage
-    - master
+    refs:
+      - stage
+      - master
   <<: *build_template
 
 Dev deploy job:
