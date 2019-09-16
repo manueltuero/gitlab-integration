@@ -23,10 +23,8 @@ Deploy Job:
   image: python:latest
   stage: deploy
   script:
-    - echo $AWS_BUCKET_URL
-    - echo $AWS_DEFAULT_REGION
     - pip install awscli
-    - aws s3 sync build s3://gitlab-integration-test.s3.amazonaws.com/
+    - aws s3 sync build s3://gitlab-integration
   only:
     refs:
       - master
