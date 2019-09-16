@@ -22,8 +22,9 @@ Build Job:
 Deploy Job:
   image: python:latest
   stage: deploy
-  script:
+  before_script:
     - pip install awscli
+  script:
     - aws s3 sync build s3://$AWS_BUCKET_NAME
   only:
     refs:
