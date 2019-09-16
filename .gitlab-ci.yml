@@ -29,7 +29,8 @@ cache:
 
 Dev build job:
   except:
-    - branches
+    refs:
+      - development
   <<: *build_template
 
 Dev deploy job:
