@@ -24,7 +24,7 @@ Deploy Job:
   stage: deploy
   script:
     - pip install awscli
-    - aws s3 sync build s3://gitlab-integration
+    - aws s3 sync build s3://$AWS_BUCKET_NAME
   only:
     refs:
       - master
