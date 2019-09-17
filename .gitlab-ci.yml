@@ -36,7 +36,7 @@ Dev build job:
   <<: *build_template
 
 Dev deploy job:
-  script:
+  before_script:
     - create-env --env-file .env --env-prefix DEV_
   only:
     refs:
