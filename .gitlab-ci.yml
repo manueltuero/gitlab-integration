@@ -26,8 +26,6 @@ cache:
     - python3 get-pip.py
     - pip3 install awscli --upgrade
     - npm i -g create-env
-  script:
-    - aws s3 sync build s3://$AWS_BUCKET_NAME
 
 Dev build job:
   except:
@@ -36,8 +34,9 @@ Dev build job:
   <<: *build_template
 
 Dev deploy job:
-  before_script:
+  script:
     - create-env --env-file .env --env-prefix DEV_
+    - aws s3 sync build s3://$AWS_BUCKET_NAME
   only:
     refs:
       - development
