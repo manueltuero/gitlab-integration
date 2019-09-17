@@ -1,4 +1,8 @@
-image: node:10
+image:
+  name: robpco/awscli
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 stages:
   - build
