@@ -34,6 +34,7 @@ Dev deploy:
     - npm i -g create-env
   script:
     - create-env --env-file .env --env-prefix DEV_
+    - echo $AWS_BUCKET_NAME
     - aws s3 sync build s3://$AWS_BUCKET_NAME
   only:
     refs:
