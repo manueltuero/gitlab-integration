@@ -45,3 +45,22 @@ Dev deploy job:
       - package-lock.json
       - .gitlab-ci.yml
   <<: *deploy_template
+
+Test build job:
+  only:
+    refs:
+      - test
+  <<: *build_template
+
+Test deploy job:
+  only:
+    refs:
+      - test
+    changes:
+      - src/**/*
+      - static/**/*
+      - content/**/*
+      - package.json
+      - package-lock.json
+      - .gitlab-ci.yml
+  <<: *deploy_template
