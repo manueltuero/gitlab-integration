@@ -1,8 +1,4 @@
-image:
-  name: robpco/awscli
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+image: node:10
 
 stages:
   - build
@@ -24,11 +20,10 @@ cache:
       - build
 
 .Deploy template: &deploy_template
-  image: python:latest
   stage: deploy
   before_script:
     - pip install awscli
-    - npm --version
+    - npm i -g create-env
   script:
     - aws s3 sync build s3://$AWS_BUCKET_NAME
 
