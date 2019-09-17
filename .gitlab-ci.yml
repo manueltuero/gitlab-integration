@@ -24,7 +24,7 @@ cache:
   stage: deploy
   before_script:
     - pip install awscli
-    - npm install -g create-env
+    - npm --version
   script:
     - aws s3 sync build s3://$AWS_BUCKET_NAME
 
