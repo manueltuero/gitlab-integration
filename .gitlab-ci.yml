@@ -22,7 +22,11 @@ cache:
 .Deploy template: &deploy_template
   stage: deploy
   before_script:
-    - pip install awscli
+    - curl -O https://bootstrap.pypa.io/get-pip.py
+    - python3 get-pip.py --user
+    - pip3 --version
+    - pip3 install awscli --upgrade --user
+    - aws --version
     - npm i -g create-env
   script:
     - aws s3 sync build s3://$AWS_BUCKET_NAME
