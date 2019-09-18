@@ -19,23 +19,19 @@ cache:
     paths:
       - build
 
-Dev build job:
-  except:
+Dev build:
+  only:
     refs:
-      - master
+      - development
   <<: *build_template
 
 Dev deploy:
+  image: python:latest
   stage: deploy
   before_script:
-    - curl -O https://bootstrap.pypa.io/get-pip.py
-    - python3 get-pip.py
-    - pip3 install awscli --upgrade
-    - npm i -g create-env
+    - pip install awscli
   script:
-    - create-env --env-file .env --env-prefix DEV_
-    - echo $AWS_BUCKET_NAME
-    - aws s3 sync build s3://$AWS_BUCKET_NAME
+    - aws s3 sync build s3://$DEV_AWS_BUCKET_NAME
   only:
     refs:
       - development
@@ -46,31 +42,5 @@ Dev deploy:
       - package.json
       - package-lock.json
       - .gitlab-ci.yml
-
-Test build:
-  only:
-    refs:
-      - test
-  <<: *build_template
-
-Test deploy:
-  stage: deploy
-  before_script:
-    - curl -O https://bootstrap.pypa.io/get-pip.py
-    - python3 get-pip.py
-    - pip3 install awscli --upgrade
-    - npm i -g create-env
-  script:
-    - create-env --env-file .env --env-prefix TEST_
-    - echo $AWS_BUCKET_NAME
-    - aws s3 sync build s3://$AWS_BUCKET_NAME
-  only:
-    refs:
-      - test
-    changes:
-      - src/**/*
-      - static/**/*
-      - content/**/*
-      - package.json
-      - package-lock.json
-      - .gitlab-ci.yml
+  dependencies:
+    - Dev build
