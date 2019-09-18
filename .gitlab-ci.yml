@@ -1,3 +1,4 @@
+# Global Docker image for the runner
 image: node:10
 
 stages:
@@ -8,6 +9,7 @@ cache:
   paths:
     - node_modules/
 
+# Templates
 .Build template: &build_template
   stage: build
   before_script:
@@ -19,19 +21,45 @@ cache:
     paths:
       - build
 
-Dev build:
-  only:
-    refs:
-      - development
-  <<: *build_template
-
-Dev deploy:
+.Deploy template: &deploy_template
   image: python:latest
   stage: deploy
   before_script:
     - pip install awscli
   script:
-    - aws s3 sync build s3://$DEV_AWS_BUCKET_NAME
+    - aws s3 sync build s3://$AWS_BUCKET_NAME
+
+# Build Jobs
+Dev build:
+  except:
+    - test
+    - master
+  variables:
+    AWS_BUCKET_NAME: $DEV_AWS_BUCKET_NAME
+    AWS_ACCESS_KEY_ID: $DEV_AWS_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY: $DEV_AWS_SECRET_ACCESS_KEY
+  <<: *build_template
+
+Test build:
+  only:
+    refs:
+      - test
+  variables:
+    AWS_BUCKET_NAME: $TEST_AWS_BUCKET_NAME
+    AWS_ACCESS_KEY_ID: $TEST_AWS_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY: $TEST_AWS_SECRET_ACCESS_KEY
+  <<: *build_template
+
+Prod build:
+  only:
+    refs:
+      - master
+  variables:
+    AWS_BUCKET_NAME: $PROD_AWS_BUCKET_NAME
+  <<: *build_template
+
+# Deployment Jobs
+Dev deploy:
   only:
     refs:
       - development
@@ -44,3 +72,19 @@ Dev deploy:
       - .gitlab-ci.yml
   dependencies:
     - Dev build
+  <<: *deploy_template
+
+Test deploy:
+  only:
+    refs:
+      - test
+    changes:
+      - src/**/*
+      - static/**/*
+      - content/**/*
+      - package.json
+      - package-lock.json
+      - .gitlab-ci.yml
+  dependencies:
+    - Test build
+  <<: *deploy_template
