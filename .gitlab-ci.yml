@@ -34,28 +34,18 @@ Dev build:
   except:
     - test
     - master
-  variables:
-    AWS_BUCKET_NAME: $DEV_AWS_BUCKET_NAME
-    AWS_ACCESS_KEY_ID: $DEV_AWS_ACCESS_KEY
-    AWS_SECRET_ACCESS_KEY: $DEV_AWS_SECRET_ACCESS_KEY
   <<: *build_template
 
 Test build:
   only:
     refs:
       - test
-  variables:
-    AWS_BUCKET_NAME: $TEST_AWS_BUCKET_NAME
-    AWS_ACCESS_KEY_ID: $TEST_AWS_ACCESS_KEY
-    AWS_SECRET_ACCESS_KEY: $TEST_AWS_SECRET_ACCESS_KEY
   <<: *build_template
 
 Prod build:
   only:
     refs:
       - master
-  variables:
-    AWS_BUCKET_NAME: $PROD_AWS_BUCKET_NAME
   <<: *build_template
 
 # Deployment Jobs
@@ -72,6 +62,10 @@ Dev deploy:
       - .gitlab-ci.yml
   dependencies:
     - Dev build
+  variables:
+    AWS_BUCKET_NAME: $DEV_AWS_BUCKET_NAME
+    AWS_ACCESS_KEY_ID: $DEV_AWS_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY: $DEV_AWS_SECRET_ACCESS_KEY
   <<: *deploy_template
 
 Test deploy:
@@ -87,4 +81,8 @@ Test deploy:
       - .gitlab-ci.yml
   dependencies:
     - Test build
+  variables:
+    AWS_BUCKET_NAME: $TEST_AWS_BUCKET_NAME
+    AWS_ACCESS_KEY_ID: $TEST_AWS_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY: $TEST_AWS_SECRET_ACCESS_KEY
   <<: *deploy_template
