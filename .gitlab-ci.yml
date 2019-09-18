@@ -31,9 +31,9 @@ cache:
 
 # Build Jobs
 Dev build:
-  except:
-    - test
-    - master
+   only:
+    refs:
+      - development
   <<: *build_template
 
 Test build:
