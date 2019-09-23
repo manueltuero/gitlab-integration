@@ -27,6 +27,7 @@ cache:
   before_script:
     - pip install awscli
   script:
+    - echo prod = $AWS_BUCKET_NAME
     - aws s3 sync build s3://$AWS_BUCKET_NAME
     - curl -X POST $SLACK_WEBHOOK_URL -H 'Content-Type:application/json' -d '{"attachments":[{"fallback":"A deployment has started to '"$AWS_BUCKET_NAME"'", "color":"good", "pretext":"*A deployment has started to '"$AWS_BUCKET_NAME"'*", "title":"New Deployment", "text":"'"$CI_COMMIT_SHA"' \n '"$CI_COMMIT_MESSAGE"'", "footer":"Slack API", "footer_icon":"https://platform.slack-edge.com/img/default_application_icon.png"}]}'
 
