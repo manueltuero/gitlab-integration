@@ -113,17 +113,13 @@ Prod deploy:
 Metrics:
   stage: metrics
   before_script:
-    - pwd
     - cd ../
-    - pwd
     - mkdir scripts
     - cd scripts
-    - pwd
     - git clone https://github.com/Wolox/project-health-checker
-    - cd $CI_PROJECT_NAME
     - npm i
   script:
-    - node index.js -p $CI_PROJECT_PATH
+    - node index.js -p ../../$CI_PROJECT_NAME
     
   only:
     refs:
