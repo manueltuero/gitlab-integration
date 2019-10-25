@@ -115,9 +115,10 @@ Metrics:
   before_script:
     - npm ci
   script:
+    - cd ../
     - git clone https://github.com/Wolox/project-health-checker
-    - cd project-health-checker
     - echo $CI_PROJECT_PATH
+    - node index.js -p $CI_PROJECT_PATH
     
   only:
     refs:
