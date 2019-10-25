@@ -2,9 +2,9 @@
 image: node:10
 
 stages:
-  - build
-  - deploy
   - metrics
+  # - build
+  # - deploy
 
 cache:
   paths:
@@ -30,6 +30,30 @@ cache:
   script:
     - aws s3 sync build s3://$AWS_BUCKET_NAME
     - curl -X POST $SLACK_WEBHOOK_URL -H 'Content-Type:application/json' -d '{"attachments":[{"fallback":"A deployment has started to '"$AWS_BUCKET_NAME"'", "color":"good", "pretext":"*A deployment has started to '"$AWS_BUCKET_NAME"'*", "title":"New Deployment", "text":"'"$CI_COMMIT_SHA"' \n '"$CI_COMMIT_MESSAGE"'", "footer":"Slack API", "footer_icon":"https://platform.slack-edge.com/img/default_application_icon.png"}]}'
+
+# Metrics Jobs
+Metrics:
+  stage: metrics
+  before_script:
+    - cd ../
+    - mkdir scripts
+    - cd scripts
+    - git clone https://github.com/Wolox/project-health-checker
+    - cd project-health-checker
+    - npm i
+  script:
+    - node index.js -p ../../$CI_PROJECT_NAME
+    
+  only:
+    refs:
+      - development
+    changes:
+      - src/**/*
+      - static/**/*
+      - content/**/*
+      - package.json
+      - package-lock.json
+      - .gitlab-ci.yml
 
 # Build Jobs
 Dev build:
@@ -108,29 +132,3 @@ Prod deploy:
     AWS_ACCESS_KEY_ID: $PROD_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: $PROD_AWS_SECRET_ACCESS_KEY
   <<: *deploy_template
-
-# Metrics Jobs
-Metrics:
-  stage: metrics
-  before_script:
-    - cd ../
-    - mkdir scripts
-    - cd scripts
-    - git clone https://github.com/Wolox/project-health-checker
-    - cd project-health-checker
-    - npm i
-  script:
-    - node index.js -p ../../gitlab-integration
-    
-  only:
-    refs:
-      - development
-    changes:
-      - src/**/*
-      - static/**/*
-      - content/**/*
-      - package.json
-      - package-lock.json
-      - .gitlab-ci.yml
-  variables:
-    AWS_BUCKET_NAME: $PROD_AWS_BUCKET_NAME
