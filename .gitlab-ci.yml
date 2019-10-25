@@ -117,7 +117,7 @@ Metrics:
     - mkdir scripts
     - cd scripts
     - git clone https://github.com/Wolox/project-health-checker
-    - ls
+    - cd project-health-checker
     - npm i
   script:
     - node index.js -p ../../$CI_PROJECT_NAME
