@@ -117,8 +117,8 @@ Metrics:
   script:
     - cd ../
     - git clone https://github.com/Wolox/project-health-checker
-    - echo $CI_PROJECT_PATH
-    - node index.js -p $CI_PROJECT_PATH
+    - echo $CI_PROJECT_NAME
+    - node index.js -p $CI_PROJECT_NAME
     
   only:
     refs:
