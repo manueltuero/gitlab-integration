@@ -120,7 +120,7 @@ Metrics:
     - cd project-health-checker
     - npm i
   script:
-    - node index.js -p ../../$CI_PROJECT_NAME
+    - node index.js -p ../../gitlab-integration
     
   only:
     refs:
