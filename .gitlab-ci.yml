@@ -4,30 +4,30 @@ image: node:10
 stages:
   - metrics
 
-cache:
-  paths:
-    - node_modules/
+# cache:
+#   paths:
+#     - node_modules/
 
-# Templates
-.Build template: &build_template
-  stage: build
-  before_script:
-    - npm ci
-  script:
-    - npm run build
-  artifacts:
-    name: build
-    paths:
-      - build
+# # Templates
+# .Build template: &build_template
+#   stage: build
+#   before_script:
+#     - npm ci
+#   script:
+#     - npm run build
+#   artifacts:
+#     name: build
+#     paths:
+#       - build
 
-.Deploy template: &deploy_template
-  image: python:latest
-  stage: deploy
-  before_script:
-    - pip install awscli
-  script:
-    - aws s3 sync build s3://$AWS_BUCKET_NAME
-    - curl -X POST $SLACK_WEBHOOK_URL -H 'Content-Type:application/json' -d '{"attachments":[{"fallback":"A deployment has started to '"$AWS_BUCKET_NAME"'", "color":"good", "pretext":"*A deployment has started to '"$AWS_BUCKET_NAME"'*", "title":"New Deployment", "text":"'"$CI_COMMIT_SHA"' \n '"$CI_COMMIT_MESSAGE"'", "footer":"Slack API", "footer_icon":"https://platform.slack-edge.com/img/default_application_icon.png"}]}'
+# .Deploy template: &deploy_template
+#   image: python:latest
+#   stage: deploy
+#   before_script:
+#     - pip install awscli
+#   script:
+#     - aws s3 sync build s3://$AWS_BUCKET_NAME
+#     - curl -X POST $SLACK_WEBHOOK_URL -H 'Content-Type:application/json' -d '{"attachments":[{"fallback":"A deployment has started to '"$AWS_BUCKET_NAME"'", "color":"good", "pretext":"*A deployment has started to '"$AWS_BUCKET_NAME"'*", "title":"New Deployment", "text":"'"$CI_COMMIT_SHA"' \n '"$CI_COMMIT_MESSAGE"'", "footer":"Slack API", "footer_icon":"https://platform.slack-edge.com/img/default_application_icon.png"}]}'
 
 # Metrics Jobs
 Metrics:
