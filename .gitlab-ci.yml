@@ -3,6 +3,8 @@ image: node:10
 
 stages:
   - metrics
+  - build
+  - deploy
 
 cache:
   paths:
