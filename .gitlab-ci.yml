@@ -114,7 +114,7 @@ Metrics:
   stage: metrics
   before_script:
     - npm ci
-    - apt-get install -y git
+    # - apt-get install -y git
   script:
     - git clone https://github.com/Wolox/project-health-checker
     - cd project-health-checker
