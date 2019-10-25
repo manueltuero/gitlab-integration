@@ -120,10 +120,10 @@ Metrics:
     - cd scripts
     - pwd
     - git clone https://github.com/Wolox/project-health-checker
-    - ls
+    - cd $CI_PROJECT_NAME
     - npm i
   script:
-    - node index.js -p $CI_PROJECT_NAME
+    - node index.js -p $CI_PROJECT_PATH
     
   only:
     refs:
