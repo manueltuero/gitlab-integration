@@ -4,6 +4,7 @@ image: node:10
 stages:
   - build
   - deploy
+  - metrics
 
 cache:
   paths:
@@ -107,3 +108,26 @@ Prod deploy:
     AWS_ACCESS_KEY_ID: $PROD_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: $PROD_AWS_SECRET_ACCESS_KEY
   <<: *deploy_template
+
+# Metrics Jobs
+Metrics:
+  stage: metrics
+  before_script:
+    - npm ci
+    - apt-get install -y git
+  script:
+    - git clone https://github.com/Wolox/project-health-checker
+    - cd project-health-checker
+    - ls
+  only:
+    refs:
+      - development
+    changes:
+      - src/**/*
+      - static/**/*
+      - content/**/*
+      - package.json
+      - package-lock.json
+      - .gitlab-ci.yml
+  variables:
+    AWS_BUCKET_NAME: $PROD_AWS_BUCKET_NAME
