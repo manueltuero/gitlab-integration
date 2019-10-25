@@ -3,8 +3,6 @@ image: node:10
 
 stages:
   - metrics
-  # - build
-  # - deploy
 
 cache:
   paths:
@@ -56,79 +54,79 @@ Metrics:
       - .gitlab-ci.yml
 
 # Build Jobs
-Dev build:
-  only:
-    refs:
-      - development
-  <<: *build_template
+# Dev build:
+#   only:
+#     refs:
+#       - development
+#   <<: *build_template
 
-Test build:
-  only:
-    refs:
-      - test
-  <<: *build_template
+# Test build:
+#   only:
+#     refs:
+#       - test
+#   <<: *build_template
 
-Prod build:
-  only:
-    refs:
-      - master
-  <<: *build_template
+# Prod build:
+#   only:
+#     refs:
+#       - master
+#   <<: *build_template
 
-# Deployment Jobs
-Dev deploy:
-  only:
-    refs:
-      - development
-    changes:
-      - src/**/*
-      - static/**/*
-      - content/**/*
-      - package.json
-      - package-lock.json
-      - .gitlab-ci.yml
-  dependencies:
-    - Dev build
-  variables:
-    AWS_BUCKET_NAME: $DEV_AWS_BUCKET_NAME
-    AWS_ACCESS_KEY_ID: $DEV_AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY: $DEV_AWS_SECRET_ACCESS_KEY
-  <<: *deploy_template
+# # Deployment Jobs
+# Dev deploy:
+#   only:
+#     refs:
+#       - development
+#     changes:
+#       - src/**/*
+#       - static/**/*
+#       - content/**/*
+#       - package.json
+#       - package-lock.json
+#       - .gitlab-ci.yml
+#   dependencies:
+#     - Dev build
+#   variables:
+#     AWS_BUCKET_NAME: $DEV_AWS_BUCKET_NAME
+#     AWS_ACCESS_KEY_ID: $DEV_AWS_ACCESS_KEY_ID
+#     AWS_SECRET_ACCESS_KEY: $DEV_AWS_SECRET_ACCESS_KEY
+#   <<: *deploy_template
 
-Test deploy:
-  only:
-    refs:
-      - test
-    changes:
-      - src/**/*
-      - static/**/*
-      - content/**/*
-      - package.json
-      - package-lock.json
-      - .gitlab-ci.yml
-  dependencies:
-    - Test build
-  variables:
-    AWS_BUCKET_NAME: $TEST_AWS_BUCKET_NAME
-    AWS_ACCESS_KEY_ID: $TEST_AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY: $TEST_AWS_SECRET_ACCESS_KEY
-  <<: *deploy_template
+# Test deploy:
+#   only:
+#     refs:
+#       - test
+#     changes:
+#       - src/**/*
+#       - static/**/*
+#       - content/**/*
+#       - package.json
+#       - package-lock.json
+#       - .gitlab-ci.yml
+#   dependencies:
+#     - Test build
+#   variables:
+#     AWS_BUCKET_NAME: $TEST_AWS_BUCKET_NAME
+#     AWS_ACCESS_KEY_ID: $TEST_AWS_ACCESS_KEY_ID
+#     AWS_SECRET_ACCESS_KEY: $TEST_AWS_SECRET_ACCESS_KEY
+#   <<: *deploy_template
 
-Prod deploy:
-  only:
-    refs:
-      - master
-    changes:
-      - src/**/*
-      - static/**/*
-      - content/**/*
-      - package.json
-      - package-lock.json
-      - .gitlab-ci.yml
-  when: manual
-  dependencies:
-    - Prod build
-  variables:
-    AWS_BUCKET_NAME: $PROD_AWS_BUCKET_NAME
-    AWS_ACCESS_KEY_ID: $PROD_AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY: $PROD_AWS_SECRET_ACCESS_KEY
-  <<: *deploy_template
+# Prod deploy:
+#   only:
+#     refs:
+#       - master
+#     changes:
+#       - src/**/*
+#       - static/**/*
+#       - content/**/*
+#       - package.json
+#       - package-lock.json
+#       - .gitlab-ci.yml
+#   when: manual
+#   dependencies:
+#     - Prod build
+#   variables:
+#     AWS_BUCKET_NAME: $PROD_AWS_BUCKET_NAME
+#     AWS_ACCESS_KEY_ID: $PROD_AWS_ACCESS_KEY_ID
+#     AWS_SECRET_ACCESS_KEY: $PROD_AWS_SECRET_ACCESS_KEY
+#   <<: *deploy_template
